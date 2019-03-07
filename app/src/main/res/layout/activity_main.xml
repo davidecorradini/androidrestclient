@@ -28,7 +28,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +43,7 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/textView"
@@ -59,7 +60,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextSeachTitle"
+                android:id="@+id/editTextSearchQuery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -72,7 +73,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Search" />
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewSearchResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -84,7 +98,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -241,7 +255,7 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -260,6 +274,14 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="-" />
+
+                <EditText
+                    android:id="@+id/editTextEditTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:visibility="gone" />
             </TableRow>
 
             <TableRow
@@ -279,6 +301,14 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="-" />
+
+                <EditText
+                    android:id="@+id/editTextEditAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:visibility="gone" />
             </TableRow>
 
             <TableRow
@@ -298,6 +328,14 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="-" />
+
+                <EditText
+                    android:id="@+id/editTextEditReleaseDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="date"
+                    android:visibility="gone" />
             </TableRow>
 
             <TableRow
@@ -317,8 +355,44 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="-" />
+
+                <EditText
+                    android:id="@+id/editTextEditPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:visibility="gone" />
             </TableRow>
         </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="Edit" />
+
+            <Button
+                android:id="@+id/buttonDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="Delete" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewGetResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp" />
 
     </LinearLayout>
 
