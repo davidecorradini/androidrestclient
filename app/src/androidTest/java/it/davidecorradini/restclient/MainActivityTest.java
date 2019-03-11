@@ -1,28 +1,17 @@
 package it.davidecorradini.restclient;
 
-
-import android.support.test.espresso.ViewInteraction;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -32,45 +21,32 @@ public class MainActivityTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest() {
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.buttonSearch), withText("Search"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.searchLayout),
-                                        2),
-                                1),
-                        isDisplayed()));
-        appCompatButton.perform(click());
-
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.textViewSearchResults), withText("No result found."),
-                        childAtPosition(
-                                allOf(withId(R.id.searchLayout),
-                                        childAtPosition(
-                                                withId(R.id.container),
-                                                0)),
-                                3),
-                        isDisplayed()));
-        textView.check(matches(withText("No result found.")));
+    public void voidSearchTest() {
+        onView(withId(R.id.buttonSearch)).perform(click());
+        onView(withId(R.id.textViewSearchResults)).check(matches(withText("[2] Titolo di prova - Davide Corradini\n")));
     }
 
-    private static Matcher<View> childAtPosition(
-            final Matcher<View> parentMatcher, final int position) {
+    @Test
+    public void querySearchTest() {
+        onView(withId(R.id.editTextSearchQuery)).perform(replaceText("turwioep"));
+        onView(withId(R.id.buttonSearch)).perform(click());
+        onView(withId(R.id.textViewSearchResults)).check(matches(withText("No result found.")));
+    }
 
-        return new TypeSafeMatcher<View>() {
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("Child at position " + position + " in parent ");
-                parentMatcher.describeTo(description);
-            }
+    @Test
+    public void getBookTest() {
+        onView(withId(R.id.navigation_get)).perform(click());
+        onView(withId(R.id.editTextID)).perform(replaceText("2"));
+        onView(withId(R.id.buttonGet)).perform(click());
+        onView(withId(R.id.textViewGetResult)).check(matches(withText("Book found!")));
+        onView(withId(R.id.textViewGetTitle)).check(matches(withText("Titolo di prova")));
+    }
 
-            @Override
-            public boolean matchesSafely(View view) {
-                ViewParent parent = view.getParent();
-                return parent instanceof ViewGroup && parentMatcher.matches(parent)
-                        && view.equals(((ViewGroup) parent).getChildAt(position));
-            }
-        };
+    @Test
+    public void getBookWithWrongIdTest() {
+        onView(withId(R.id.navigation_get)).perform(click());
+        onView(withId(R.id.editTextID)).perform(replaceText("1"));
+        onView(withId(R.id.buttonGet)).perform(click());
+        onView(withId(R.id.textViewGetResult)).check(matches(withText("Book not found.")));
     }
 }
